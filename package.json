@@ -16,6 +16,9 @@
     "build": "tsc",
     "test": "jest"
   },
+  "bin": {
+    "aws-k8s-secrets": "./dist/script.js"
+  },
   "files": [
     "dist"
   ],
