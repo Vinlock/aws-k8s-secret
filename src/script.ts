@@ -3,6 +3,14 @@ import minimist from 'minimist'
 
 // Get arguments
 const args = minimist(process.argv.slice(2), {
+  alias: {
+    n: 'name',
+    r: 'region',
+    s: 'secret',
+  },
+  default: {
+    region: 'us-west-2',
+  },
   string: [
     'secret',
     'name',
@@ -10,21 +18,13 @@ const args = minimist(process.argv.slice(2), {
     'aws-key',
     'aws-secret',
   ],
-  alias: {
-    s: 'secret',
-    r: 'region',
-    n: 'name',
-  },
-  default: {
-    region: 'us-west-2',
-  },
 });
 
-const secret: string = args['secret']
-const region: string = args['region']
+const secret: string = args.secret
+const region: string = args.region
 const accessKeyId: string = args['aws-key']
 const secretAccessKey: string = args['aws-secret']
-const metaname = args['name'] || secret;
+const metaname = args.name || secret;
 
 // Validate
 if (!secret || secret.length === 0) {
@@ -71,12 +71,12 @@ secretsManager.getSecretValue(params).promise()
 
     const k8sSecret = {
       apiVersion: 'v1',
+      data: secretData,
       kind: 'Secret',
       metadata: {
         name: metaname
       },
       type: 'Opaque',
-      data: secretData,
     }
 
     process.stdout.write(JSON.stringify(k8sSecret))

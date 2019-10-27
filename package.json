@@ -8,7 +8,7 @@
     "email":  "vinlockz@gmail.com"
   },
   "scripts": {
-    "prepublish": "yarn build",
+    "prepare": "yarn build",
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
     "test": "jest"
